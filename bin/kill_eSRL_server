@@ -1,0 +1,14 @@
+#!/bin/bash
+awkscript='{match($7, /([[:digit:]]+)\/[.]*/, arr); print arr[1]}'
+
+procnum=`netstat -tulpn 2>/dev/null | grep 5005 | gawk $awkscript`
+grep SRLServer /proc/$procnum/cmdline
+res=$?
+if
+    [ $res == 0 ]
+then
+    echo process found: $procnum
+    sudo kill $procnum
+else
+    echo eSRL process not found
+fi
