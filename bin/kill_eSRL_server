@@ -1,7 +1,7 @@
 #!/bin/bash
 awkscript='{match($7, /([[:digit:]]+)\/[.]*/, arr); print arr[1]}'
 
-procnum=`netstat -tulpn 2>/dev/null | grep 5005 | gawk $awkscript`
+procnum=`netstat -tulpn 2>/dev/null | grep 5005 | gawk "$awkscript"`
 grep SRLServer /proc/$procnum/cmdline
 res=$?
 if

@@ -2,10 +2,13 @@
 .SUFFIXES: .pdf .w .tex .html .aux .log .php
 .PHONY : html
 
-DIRS = bin html
+DIRS = bin
 
 $(DIRS) :
 	mkdir -p $@
+
+htmldir :
+	mkdir -p html
 
 #
 # Figures
@@ -42,13 +45,13 @@ psfig_names=$(foreach fil, $(figbases), html/$(fil).pstex)
 
 
 
-html/%.pstex : %.fig $(DIRS)
+html/%.pstex : %.fig htmldir
 	fig2dev -L pstex $< > $@
 
-html/%.pstex_t : %.fig html/%.pstex $(DIRS)
+html/%.pstex_t : %.fig html/%.pstex htmldir
 	fig2dev -L pstex_t -p html/$*.pstex $*.fig > $@
 
-html/cltl_kyoto_scripts.w : cltl_kyoto_scripts.w $(DIRS)
+html/cltl_kyoto_scripts.w : cltl_kyoto_scripts.w htmldir
 	cd html && ln -fs ../cltl_kyoto_scripts.w .
 
 #
@@ -71,7 +74,7 @@ pdf : cltl_kyoto_scripts.w  $(pdf_fig_names) $(pdft_names)
 
 # html : $(hfigfiles)
 
-html : $(psfig_names) $(pst_names) html/cltl_kyoto_scripts.w $(DIRS)
+html : $(psfig_names) $(pst_names) html/cltl_kyoto_scripts.w htmldir
 	cd html && export TEXINPUTS=../: && ../w2html cltl_kyoto_scripts
 
 

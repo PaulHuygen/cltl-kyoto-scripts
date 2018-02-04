@@ -74,7 +74,7 @@ script looks whether the string \verb|SRLServer| appear in that line.
 #!/bin/bash
 @% procnum=`netstat -tulpn 2>/dev/null | grep m4_eSRLport | gawk '{match($7, /([[:digit:]]+)\/[.]*/, arr); print arr[1]}'`
 @< define awk-script to extract eSRL process-id @>
-procnum=`netstat -tulpn 2>/dev/null | grep m4_eSRLport | gawk $awkscript`
+procnum=`netstat -tulpn 2>/dev/null | grep m4_eSRLport | gawk "$awkscript"`
 grep SRLServer /proc/$procnum/cmdline
 res=$?
 if
